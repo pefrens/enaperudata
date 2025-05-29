@@ -1,8 +1,18 @@
-.Rproj.user
-raw_data
-lista_modulos_ena2023.xlsx
+# R-specific files
+.Rproj.user/
 .Rhistory
 .Rdata
 .httr-oauth
+
+# macOS-specific files
 .DS_Store
-.quarto
+
+# Quarto temporary files
+.quarto/
+
+# Large data directories
+raw_data/
+
+# Excel files (optional, if not part of package)
+lista_modulos_ena2023.xlsx
+diccionario_cap200b.xlsx
