@@ -1,0 +1,17 @@
+Package: enaperudata
+Title: Tools for Accessing and Processing ENA 2023 Microdata from INEI Peru
+Version: 0.0.0.1
+Authors@R: 
+    person("Paul Efren", "Santos Andrade", email = "paulefren16@gmail.com", role = c("aut", "cre"))
+Description: Provides tools to efficiently access, manage, and analyze microdata from the 2023 National Agricultural Survey (Encuesta Nacional Agropecuaria - ENA) conducted by the Instituto Nacional de Estadística e Informática (INEI) of Peru. The package supports the construction of key agricultural indicators related to governance, productivity, technology adoption, food safety, and socio-economic characteristics of producers. It offers structured access to more than 20 thematic modules covering agricultural and livestock activities, production costs, financing, and technical assistance, helping users to extract actionable insights and contribute to the design and evaluation of public policies that improve the livelihoods of small and medium agricultural producers.
+License: MIT + file LICENSE
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+URL: http://iinei.inei.gob.pe/microdatos/
+BugReports: https://github.com/pefrens/enaperudata/issues
+Imports: 
+    tibble
