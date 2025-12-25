@@ -14,7 +14,7 @@
 #'
 #' @return A character string with the absolute path of the output directory where the files were extracted.
 #' @importFrom utils download.file unzip
-#' 
+#'
 #' @export
 download_ena_2023 <- function(modulo = "all", dir_output = "data_ena_peru") {
   urls_modulos <- list(
@@ -39,6 +39,87 @@ download_ena_2023 <- function(modulo = "all", dir_output = "data_ena_peru") {
     modulo1846 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/922-Modulo1846.zip",
     modulo1847 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/922-Modulo1847.zip",
     modulo1848 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/922-Modulo1848.zip"
+  )
+
+  if (identical(modulo, "all")) {
+    selected_modules <- names(urls_modulos)
+  } else {
+    selected_modules <- tolower(modulo)
+    invalid <- setdiff(selected_modules, names(urls_modulos))
+    if (length(invalid) > 0) {
+      stop("Invalid modules: ", paste(invalid, collapse = ", "))
+    }
+  }
+
+  if (!dir.exists(dir_output)) {
+    dir.create(dir_output, recursive = TRUE)
+  }
+
+  for (mod in selected_modules) {
+    url <- urls_modulos[[mod]]
+    zip_filename <- basename(url)
+    zip_path <- file.path(dir_output, zip_filename)
+
+    tryCatch({
+      download.file(url, destfile = zip_path, mode = "wb")
+      cat(paste("Downloaded:", zip_filename, "\n"))
+      unzip(zip_path, exdir = dir_output)
+      cat(paste("Unzipped to:", dir_output, "\n"))
+    }, error = function(e) {
+      cat(paste("Error downloading", mod, ":", e$message, "\n"))
+    }, finally = {
+      if (file.exists(zip_path)) file.remove(zip_path)
+    })
+  }
+
+  return(normalizePath(dir_output))
+}
+
+
+
+
+#' Download Modules of the National Agricultural Survey 2024 (INEI - Peru)
+#'
+#' Downloads one, several, or all data modules from the
+#' National Agricultural Survey 2024 (Encuesta Nacional Agropecuaria ENA-2024),
+#' conducted by the National Institute of Statistics and Informatics (INEI) of Peru.
+#'
+#' Module descriptions are based on INEI documentation.
+#'
+#' @param modulo A character vector specifying which modules to download.
+#'   Use `"all"` (default) to download all modules, or specify one or more module names
+#'   such as `"modulo1893"`, `"modulo1894"`, etc. Use \code{list_ena_2024_modules()} to see available modules.
+#' @param dir_output A character string specifying the directory where the files
+#'   will be saved and extracted. Defaults to `"data_ena_peru_2024"`.
+#'
+#' @return A character string with the absolute path of the output directory where the files were extracted.
+#' @importFrom utils download.file unzip
+#'
+#' @export
+download_ena_2024 <- function(modulo = "all", dir_output = "data_ena_peru_2024") {
+
+  urls_modulos <- list(
+    modulo1893 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1893.zip",
+    modulo1894 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1894.zip",
+    modulo1895 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1895.zip",
+    modulo1896 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1896.zip",
+    modulo1897 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1897.zip",
+    modulo1898 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1898.zip",
+    modulo1899 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1899.zip",
+    modulo1900 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1900.zip",
+    modulo1901 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1901.zip",
+    modulo1902 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1902.zip",
+    modulo1903 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1903.zip",
+    modulo1904 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1904.zip",
+    modulo1905 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1905.zip",
+    modulo1906 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1906.zip",
+    modulo1907 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1907.zip",
+    modulo1908 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1908.zip",
+    modulo1909 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1909.zip",
+    modulo1910 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1910.zip",
+    modulo1911 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1911.zip",
+    modulo1912 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1912.zip",
+    modulo1913 = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/973-Modulo1913.zip"
   )
 
   if (identical(modulo, "all")) {
